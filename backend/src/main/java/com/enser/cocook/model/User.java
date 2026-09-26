@@ -32,9 +32,10 @@ public class User {
     @Column(nullable = true, unique = true)
     private String googleId;
 
-    // Para o grupo ao que pertence o usuario
+    // Para o grupo ao que pertence o usuario (default: cada usuario pertence ao seu propio grupo)
+    // Lado propietario
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id", nullable = true)
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
     //! Preguntar profe: para gardar a foto de perfil metemos un blob na BD ou gardamos unha ruta á imaxe e a gardamos no servidor?
