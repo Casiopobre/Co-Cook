@@ -18,6 +18,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Esto é como un auto-increment
     private Long id;
 
+    @Column(nullable = false)
+    private String imageRoute;
+
     @Column(nullable = false, length = 100)
     private String username;
 
@@ -37,7 +40,5 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
-
-    //! Preguntar profe: para gardar a foto de perfil metemos un blob na BD ou gardamos unha ruta á imaxe e a gardamos no servidor?
 
 }
