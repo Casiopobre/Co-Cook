@@ -51,4 +51,11 @@ public class Group {
     )
     private List<ShoppingList> shoppingList = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "group",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<MealPlan> mealPlans = new ArrayList<>();
+
 }
