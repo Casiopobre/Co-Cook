@@ -38,3 +38,8 @@ out/
 
 ### No subir contraseña de la BBDD ###
 backend/src/main/resources/application-local.properties
+
+### Frontend ###
+frontend/node_modules/
+frontend/.env.local
+frontend/.env.*.local

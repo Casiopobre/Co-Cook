@@ -1,0 +1,79 @@
+.week-calendar__scroll {
+  overflow-x: auto; /* en pantallas pequeñas, se desplaza en vez de aplastarse */
+}
+
+.week-calendar__grid {
+  display: grid;
+  grid-template-columns: 100px repeat(7, minmax(120px, 1fr));
+  gap: 0.5rem;
+  min-width: 960px;
+}
+
+.week-calendar__day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.week-calendar__day-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.week-calendar__day-number {
+  font-size: 1.125rem;
+}
+
+.week-calendar__row-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-label);
+}
+
+.week-calendar__cell {
+  display: flex;
+}
+
+.week-calendar__cell > * {
+  flex: 1;
+}
+
+.week-calendar__day-header {
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s;
+}
+
+.week-calendar__day-header:hover {
+  border: 1px solid var(--color-border-soft);
+}
+
+.week-calendar__day-header--selected {
+  background-color: var(--color-primary);
+}
+
+.week-calendar__day-header--selected .week-calendar__day-label,
+.week-calendar__day-header--selected .week-calendar__day-number {
+  color: #fff;
+}
+
+.week-calendar__cell--selected {
+  position: relative;
+}
+
+.week-calendar__cell--selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-left: 2px solid var(--color-primary);
+  border-right: 2px solid var(--color-primary);
+  pointer-events: none;
+}

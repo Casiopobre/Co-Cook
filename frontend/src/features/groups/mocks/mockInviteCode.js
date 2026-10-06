@@ -1,0 +1,1 @@
+export const MOCK_INVITE_CODE = 'AB12CD'
