@@ -20,6 +20,9 @@ public class MealPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private LocalDate date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
@@ -31,7 +34,4 @@ public class MealPlan {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)
     private MealType mealType;
-
-    @Column(nullable = false)
-    private LocalDate date;
 }

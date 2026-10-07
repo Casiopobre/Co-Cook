@@ -18,6 +18,7 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Considerase un serving = 100g
     @Column(nullable = false)
     private Integer kcalPerServing;
 
