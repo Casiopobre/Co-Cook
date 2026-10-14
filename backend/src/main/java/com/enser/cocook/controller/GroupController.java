@@ -1,13 +1,11 @@
 package com.enser.cocook.controller;
 
+import com.enser.cocook.dto.InviteCodeResponse;
 import com.enser.cocook.dto.UserDTO;
 import com.enser.cocook.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,10 @@ public class GroupController {
     public ResponseEntity<List<UserDTO>> getMembers(@PathVariable("id") Long id) {
         return ResponseEntity.ok(groupService.getMembers(id));
     }
+
+    @GetMapping("/{id}/invite-code")
+    public ResponseEntity<InviteCodeResponse> getInviteCode(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(groupService.getInviteCode(id));
+    }
+
 }

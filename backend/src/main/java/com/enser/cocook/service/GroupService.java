@@ -1,5 +1,6 @@
 package com.enser.cocook.service;
 
+import com.enser.cocook.dto.InviteCodeResponse;
 import com.enser.cocook.dto.UserDTO;
 import com.enser.cocook.exceptions.GroupNotFoundException;
 import com.enser.cocook.model.Group;
@@ -24,5 +25,11 @@ public class GroupService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException());
         return group.getUsers().stream().map(UserDTO::from).toList();
+    }
+
+    public InviteCodeResponse getInviteCode(Long groupId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException());
+        return new InviteCodeResponse(group.getInviteCode());
     }
 }

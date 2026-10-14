@@ -29,6 +29,9 @@ public class Group {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(nullable = false, unique = true, length = 8)
+    private String inviteCode;
+
     // Lado inverso da relacion usuarios:grupo (N:1)
     @OneToMany(
             mappedBy = "group",
