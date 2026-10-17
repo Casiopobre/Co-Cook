@@ -1,5 +1,6 @@
 package com.enser.cocook.dto;
 
+import com.enser.cocook.dto.group.GroupDTO;
 import com.enser.cocook.model.User;
 
 public record UserDTO(
