@@ -1,28 +1,211 @@
-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    background-color: #f8f8f8;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100; /* por debajo del modal (1000) */
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-soft);
 }
 
-ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-wrap: nowrap;
-    list-style: none;
-    gap: 3em;
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 1200px; /* mismo ancho que .main-content */
+  height: 60px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-ul li a {
-    text-decoration: none;
-    color: inherit;
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.navbar__logo {
+  font-size: 1.375rem;
+  line-height: 1;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar__link {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.navbar__link:hover {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.navbar__link--active {
+  color: var(--color-primary-hover);
+  background-color: #ecfdf5;
+}
+
+/* Menú de usuario */
+.navbar__user {
+  position: relative;
+}
+
+.navbar__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.navbar__trigger:hover,
+.navbar__trigger[aria-expanded='true'] {
+  background-color: var(--color-bg);
+  border-color: var(--color-border-soft);
+}
+
+.navbar__trigger:focus-visible,
+.navbar__link:focus-visible,
+.navbar__brand:focus-visible,
+.navbar__logout:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.navbar__username {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.navbar__chevron {
+  width: 6px;
+  height: 6px;
+  margin: 0 0.25rem 3px 0;
+  border-right: 1.5px solid var(--color-text-muted);
+  border-bottom: 1.5px solid var(--color-text-muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s;
+}
+
+.navbar__chevron--open {
+  transform: rotate(-135deg);
+  margin-bottom: -2px;
+}
+
+.navbar__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 17rem;
+  padding: 0.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.navbar__menu-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.25rem 1rem;
+}
+
+.navbar__menu-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  min-width: 0;
+  text-align: center;
+}
+
+.navbar__menu-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.navbar__menu-email {
+    max-width: 100%; /* para que el recorte con puntos suspensivos funcione al estar centrado */
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar__menu-group {
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border-soft);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.navbar__logout {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-danger-text);
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.navbar__logout:hover {
+  background-color: var(--color-danger-bg);
+}
+
+@media (max-width: 600px) {
+  .navbar__inner {
+    padding: 0 1rem;
+  }
+
+  .navbar__left {
+    gap: 1rem;
+  }
+
+  /* En móvil queda solo el avatar; el nombre sigue en el menú */
+  .navbar__username {
+    display: none;
+  }
+
+  .navbar__menu {
+    width: min(17rem, calc(100vw - 2rem));
+  }
 }

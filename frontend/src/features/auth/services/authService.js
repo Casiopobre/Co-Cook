@@ -1,14 +1,3 @@
-/* Antigüo código
-import axiosClient from '../../../api/axiosClient'
-import { ENDPOINTS } from '../../../api/endpoints'
-
-export const authService = {
-  login: (credentials) => axiosClient.post(ENDPOINTS.auth.login, credentials),
-  register: (data) => axiosClient.post(ENDPOINTS.auth.register, data),
-  me: () => axiosClient.get(ENDPOINTS.auth.me),
-}*/
-
-// Bypaseasear un usuario falso con mock
 import axiosClient from '../../../api/axiosClient'
 import { ENDPOINTS } from '../../../api/endpoints'
 import { MOCK_USER, MOCK_TOKEN } from '../mocks/mockUser'

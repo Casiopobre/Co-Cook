@@ -32,7 +32,7 @@ function Home() {
 
       <GroupMembers />
 
-      <h2 style={{ marginBottom: '1rem' }}>Planificación Semanal</h2>
+      <h2 style={{marginTop: '1rem', marginBottom: '1rem' }}>Planificación Semanal</h2>
       <WeekCalendar
         weekDates={weekDates}
         weekPlan={weekPlan}

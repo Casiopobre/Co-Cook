@@ -5,8 +5,8 @@ import { useAuth } from './useAuth'
 export function useRegister() {
   const { setSession } = useAuth()
   return useMutation({
-    mutationFn: ({ name, email, password }) =>
-      authService.register({ name, email, password }),
+    mutationFn: ({ username, email, password }) =>
+      authService.register({ username, email, password }),
     onSuccess: (data) => setSession(data),
   })
 }

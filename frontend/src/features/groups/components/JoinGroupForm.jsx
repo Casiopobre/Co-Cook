@@ -24,11 +24,8 @@ export function JoinGroupForm({ hasCompanions, onSuccess }) {
     mutate(data, { onSuccess })
   }
 
-  const errorMessage =
-    error?.response?.status === 404
-      ? 'El código no es válido'
-      : error && 'No se pudo completar la unión al grupo'
-
+  const errorMessage = error?.response?.data?.message || error?.message
+  
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form" noValidate>
       {hasCompanions && (

@@ -38,11 +38,11 @@ export function RegisterForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form" noValidate>
       <FormField
-        id="name"
-        label="Nombre"
-        autoComplete="name"
-        error={errors.name?.message}
-        {...register('name')}
+        id="username"
+        label="Nombre de usuario"
+        autoComplete="username"
+        error={errors.username?.message}
+        {...register('username')}
       />
       <FormField
         id="email"
