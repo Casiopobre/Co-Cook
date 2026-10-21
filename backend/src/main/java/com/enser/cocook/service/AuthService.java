@@ -62,7 +62,6 @@ public class AuthService {
         return new AuthResponse(token, toDto(user));
     }
 
-    @Transactional(readOnly = true)
     public UserDTO getCurrentUser(User principal) {
         User user = userRepository.findById(principal.getId())
                 .orElseThrow(InvalidCredentialsException::new);

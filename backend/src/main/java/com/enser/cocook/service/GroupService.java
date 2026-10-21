@@ -28,7 +28,6 @@ public class GroupService {
         this.userRepository = userRepository;
     }
 
-    @Transactional(readOnly = true)
     public List<UserDTO> getMembers(Long groupId, User principal) {
         requireMember(groupId, principal);
 
@@ -38,7 +37,6 @@ public class GroupService {
         return group.getUsers().stream().map(this::toUserDto).toList();
     }
 
-    @Transactional(readOnly = true)
     public InviteCodeResponse getInviteCode(Long groupId, User principal) {
         requireMember(groupId, principal);
 
