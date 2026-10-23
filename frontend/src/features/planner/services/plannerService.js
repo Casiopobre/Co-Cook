@@ -21,14 +21,14 @@ export const plannerService = {
     return axiosClient.get(ENDPOINTS.mealPlans.byGroupAndRange(groupId, from, to))
   },
 
-  assign: (groupId, { date, mealType, mealId, meal }) => {
+  assign: (groupId, { date, mealType, mealId, meal, quantityGrams }) => {
     if (MOCK_PLANNER) {
       mockState = mockState.filter((mp) => !(mp.date === date && mp.mealType === mealType))
-      const newEntry = { id: nextMockId++, date, mealType, meal }
+      const newEntry = { id: nextMockId++, date, mealType, meal, quantityGrams }
       mockState.push(newEntry)
       return fakeDelay(newEntry)
     }
-    return axiosClient.post(ENDPOINTS.mealPlans.create(groupId), { date, mealType, mealId })
+    return axiosClient.post(ENDPOINTS.mealPlans.create(groupId), { date, mealType, mealId, quantityGrams })
   },
 
   remove: (groupId, date, mealType) => {

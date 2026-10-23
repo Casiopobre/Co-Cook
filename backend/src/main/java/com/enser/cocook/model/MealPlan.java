@@ -23,6 +23,9 @@ public class MealPlan {
     @Column(nullable = false)
     private LocalDate date;
 
+    @Column(nullable = false)
+    private Integer quantityGrams;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;

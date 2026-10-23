@@ -16,14 +16,16 @@ export function useWeekPlan(referenceDate = new Date()) {
     enabled: !!groupId,
   })
 
-  // Transforma la lista plana del backend en el objeto { fecha: { mealType: meal } }
+  // Transforma la lista plana del backend en el objeto { fecha: { mealType: { meal, quantityGrams } } }
   const weekPlan = useMemo(() => {
     const plan = {}
     weekDates.forEach((d) => {
       plan[toISODate(d)] = { BREAKFAST: null, LUNCH: null, SNACK: null, DINNER: null }
     })
     mealPlans.forEach((mp) => {
-      if (plan[mp.date]) plan[mp.date][mp.mealType] = mp.meal
+      if (plan[mp.date]) {
+        plan[mp.date][mp.mealType] = mp
+      }
     })
     return plan
   }, [mealPlans, weekDates])

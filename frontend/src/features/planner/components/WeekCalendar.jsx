@@ -43,7 +43,7 @@ export function WeekCalendar({
 
               {weekDates.map((date) => {
                 const iso = toISODate(date)
-                const meal = weekPlan[iso]?.[mealType] ?? null
+                const entry = weekPlan[iso]?.[mealType] ?? null
                 const isSelected = iso === selectedDate
 
                 return (
@@ -52,7 +52,7 @@ export function WeekCalendar({
                     className={`week-calendar__cell ${isSelected ? 'week-calendar__cell--selected' : ''}`}
                   >
                     <MealSlot
-                      meal={meal}
+                      entry={entry}
                       onAdd={() => onAddMeal(iso, mealType)}
                       onRemove={() => onRemoveMeal(iso, mealType)}
                     />

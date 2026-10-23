@@ -43,4 +43,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleAlreadyInGroup(AlreadyInGroupException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", ex.getMessage()));
     }
+
+    @ExceptionHandler(MealNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleMealNotFoundException(MealNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidMealException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidMeal(InvalidMealException ex) {
+        return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(MealNameAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleMealNameExists(MealNameAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", ex.getMessage()));
+    }
 }

@@ -7,24 +7,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "composed_meals",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"composed_meal_id", "meal_id"}))
+@Table(name = "meal_ingredients",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"meal_id", "ingredient_id"}))
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ComposedMeal {
+public class MealIngredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "composed_meal_id", nullable = false)
-    private Meal composedMeal;
-
+    // El plato que se está componiendo (p. ej. "Pollo con arroz")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_id", nullable = false)
     private Meal meal;
+
+    // Lo que lleva dentro (p. ej. "Arroz")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ingredient_id", nullable = false)
+    private Meal ingredient;
 
     @Column(nullable = false)
     private Integer quantityGrams;

@@ -1,4 +1,3 @@
-// src/api/endpoints.js
 export const ENDPOINTS = {
   auth: {
     login: '/auth/login',
@@ -7,8 +6,8 @@ export const ENDPOINTS = {
     googleAuthorize: '/oauth2/authorization/google',
   },
   meals: {
-    search: '/meals/search',
-    list: '/meals',
+    search: '/meals/search?',
+    byGroup: '/meals',
     byId: (id) => `/meals/${id}`,
     create: '/meals',
   },

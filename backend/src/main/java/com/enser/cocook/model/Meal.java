@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "meals")
 @Getter
@@ -18,16 +21,32 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Considerase un serving = 100g
+    @Column(nullable = false, length = 150)
+    private String name;
+
+    // Todos los valores nutricionales son por cada 100 g
     @Column(nullable = false)
-    private Integer kcalPerServing;
+    private Double kcalPer100g;
 
     @Column(nullable = false)
-    private Integer carbs;
+    private Double carbsPer100g;
 
     @Column(nullable = false)
-    private Integer proteins;
+    private Double proteinsPer100g;
 
     @Column(nullable = false)
-    private Integer fats;
+    private Double fatsPer100g;
+
+    // null = comida global del catálogo; con valor = comida creada por ese grupo
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", nullable = true)
+    private Group group;
+
+    // Ingredientes, si es un plato compuesto (vacío si es una comida simple)
+    @OneToMany(
+            mappedBy = "meal",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<MealIngredient> ingredients = new ArrayList<>();
 }

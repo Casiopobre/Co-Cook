@@ -1,5 +1,6 @@
 package com.enser.cocook.dto;
 
+import com.enser.cocook.dto.meal.MealDTO;
 import com.enser.cocook.model.MealType;
 
 import java.time.LocalDate;

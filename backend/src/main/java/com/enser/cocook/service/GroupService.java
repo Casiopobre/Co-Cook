@@ -34,7 +34,7 @@ public class GroupService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException(groupId));
 
-        return group.getUsers().stream().map(this::toUserDto).toList();
+        return group.getUsers().stream().map(UserDTO::from).toList();
     }
 
     public InviteCodeResponse getInviteCode(Long groupId, User principal) {
@@ -51,7 +51,7 @@ public class GroupService {
         String code = request.inviteCode().trim().toUpperCase();
 
         Group target = groupRepository.findByInviteCode(code)
-                .orElseThrow(() -> new InvalidInviteCodeException());
+                .orElseThrow(InvalidInviteCodeException::new);
 
         User user = loadUser(principal);
         Group oldGroup = user.getGroup();
@@ -79,13 +79,9 @@ public class GroupService {
     }
 
     private void requireMember(Long groupId, User principal) {
-        User user = loadUser(principal);
-        if (!user.getGroup().getId().equals(groupId)) {
+        if (!principal.getGroup().getId().equals(groupId)) {
             throw new NotGroupMemberException();
         }
     }
 
-    private UserDTO toUserDto(User user) {
-        return UserDTO.from(user);
-    }
 }

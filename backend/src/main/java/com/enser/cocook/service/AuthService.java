@@ -46,7 +46,7 @@ public class AuthService {
         userRepository.save(user);
 
         String token = jwtService.generateToken(user.getId(), user.getEmail());
-        return new AuthResponse(token, toDto(user));
+        return new AuthResponse(token, UserDTO.from(user));
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -59,16 +59,10 @@ public class AuthService {
         }
 
         String token = jwtService.generateToken(user.getId(), user.getEmail());
-        return new AuthResponse(token, toDto(user));
+        return new AuthResponse(token, UserDTO.from(user));
     }
 
     public UserDTO getCurrentUser(User principal) {
-        User user = userRepository.findById(principal.getId())
-                .orElseThrow(InvalidCredentialsException::new);
-        return toDto(user);
-    }
-
-    private UserDTO toDto(User user) {
-        return UserDTO.from(user);
+        return UserDTO.from(principal);
     }
 }
