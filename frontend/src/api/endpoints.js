@@ -6,7 +6,7 @@ export const ENDPOINTS = {
     googleAuthorize: '/oauth2/authorization/google',
   },
   meals: {
-    search: '/meals/search?',
+    search: '/meals/search',
     byGroup: '/meals',
     byId: (id) => `/meals/${id}`,
     create: '/meals',
