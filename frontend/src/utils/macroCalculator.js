@@ -1,3 +1,4 @@
+
 // meal: cualquier objeto con los campos "...Per100g" (un MealDTO)
 export function scaleMacros(meal, grams) {
   const factor = grams / 100

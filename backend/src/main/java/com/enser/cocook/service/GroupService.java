@@ -9,24 +9,19 @@ import com.enser.cocook.model.Group;
 import com.enser.cocook.model.User;
 import com.enser.cocook.repository.GroupRepository;
 import com.enser.cocook.repository.UserRepository;
-import org.jspecify.annotations.NullMarked;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@NullMarked // Para especificar que os atributos non poden ser nulos a menos que se especifique o contrario
+@RequiredArgsConstructor
 public class GroupService {
+
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public GroupService(GroupRepository groupRepository,  UserRepository userRepository) {
-        this.groupRepository = groupRepository;
-        this.userRepository = userRepository;
-    }
+    private final InviteCodeGenerator inviteCodeGenerator;
 
     public List<UserDTO> getMembers(Long groupId, User principal) {
         requireMember(groupId, principal);
@@ -47,13 +42,17 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupDTO join(JoinGroupRequest request, User principal) {
-        String code = request.inviteCode().trim().toUpperCase();
+    public GroupDTO join(Long userId, JoinGroupRequest request, User principal) {
+        requireSelf(userId, principal);
 
+        String code = request.inviteCode().trim().toUpperCase();
         Group target = groupRepository.findByInviteCode(code)
                 .orElseThrow(InvalidInviteCodeException::new);
 
-        User user = loadUser(principal);
+        // Se recarga: el principal viene del filtro JWT y no está ligado a esta sesión,
+        // y aquí se modifica y se guarda
+        User user = userRepository.findById(userId)
+                .orElseThrow(InvalidCredentialsException::new);
         Group oldGroup = user.getGroup();
 
         if (oldGroup.getId().equals(target.getId())) {
@@ -63,7 +62,9 @@ public class GroupService {
         user.setGroup(target);
         userRepository.save(user);
 
-        // Si el grupo que abandona se queda sin miembros, se elimina
+        // Si el grupo que dejas se queda vacío, se elimina con su planificador,
+        // despensa y lista de la compra. Las comidas no se pierden: son de cada
+        // usuario, no del grupo
         if (userRepository.countByGroupId(oldGroup.getId()) == 0) {
             groupRepository.delete(oldGroup);
         }
@@ -71,17 +72,41 @@ public class GroupService {
         return new GroupDTO(target.getId(), target.getName());
     }
 
-    // El User del SecurityContext viene de otra sesión de Hibernate (la del filtro JWT),
-    // así que se recarga dentro de la transacción actual
-    private User loadUser(User principal) {
-        return userRepository.findById(principal.getId())
-                .orElseThrow(InvalidCredentialsException::new);
-    }
-
+    // El grupo del principal se carga con el usuario (@EntityGraph en findByEmail),
+    // así que no hace falta otra consulta
     private void requireMember(Long groupId, User principal) {
         if (!principal.getGroup().getId().equals(groupId)) {
             throw new NotGroupMemberException();
         }
     }
 
+    private void requireSelf(Long userId, User principal) {
+        if (!principal.getId().equals(userId)) {
+            throw new NotResourceOwnerException();
+        }
+    }
+
+    @Transactional
+    public GroupDTO leave(Long userId, User principal) {
+        requireSelf(userId, principal);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(InvalidCredentialsException::new);
+        Long oldGroupId = user.getGroup().getId();
+
+        // Si ya está solo, no hay de qué salir
+        if (userRepository.countByGroupId(oldGroupId) <= 1) {
+            throw new AlreadyAloneException();
+        }
+
+        Group personal = new Group();
+        personal.setName(user.getUsername() + "'s group");
+        personal.setInviteCode(inviteCodeGenerator.generateUnique());
+        groupRepository.save(personal);
+
+        user.setGroup(personal);
+        userRepository.save(user);
+
+        return new GroupDTO(personal.getId(), personal.getName());
+    }
 }

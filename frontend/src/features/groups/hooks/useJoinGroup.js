@@ -4,15 +4,14 @@ import { useAuth } from '../../auth/hooks/useAuth'
 
 export function useJoinGroup() {
   const queryClient = useQueryClient()
-  const { user, setSession } = useAuth()
-  const token = localStorage.getItem('token')
+  const { user, token, setSession } = useAuth()
 
   return useMutation({
-    mutationFn: groupService.join,
+    mutationFn: (data) => groupService.join(user.id, data),
     onSuccess: (newGroup) => {
-      // Actualiza el usuario en memoria con su nuevo grupo, sin esperar a /auth/me
-      const updatedUser = { ...user, group: newGroup }
-      setSession({ token, user: updatedUser })
+      // Al cambiar user.group.id, el planificador y los miembros (que llevan el groupId
+      // en su clave) se recargan solos. Mis comidas no depende del grupo
+      setSession({ token, user: { ...user, group: newGroup } })
       queryClient.invalidateQueries({ queryKey: ['groupMembers'] })
       queryClient.invalidateQueries({ queryKey: ['inviteCode'] })
     },

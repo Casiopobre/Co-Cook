@@ -65,7 +65,16 @@ export default function NavBar() {
                                 Planificador
                             </NavLink>
                         </li>
-                        {/* aquí irán Comidas, Despensa, Lista de la compra... */}
+                        <li>
+                            <NavLink
+                                to="/meals"
+                                className={({ isActive }) =>
+                                    `navbar__link ${isActive ? 'navbar__link--active' : ''}`
+                                }
+                            >
+                                Mis comidas
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
 

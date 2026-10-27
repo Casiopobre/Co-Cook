@@ -1,0 +1,134 @@
+.add-meal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-meal__date {
+  margin-top: -0.25rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.add-meal__tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-sm);
+}
+
+.add-meal__tab {
+  flex: 1;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.add-meal__tab--active {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.add-meal__tab:focus-visible,
+.add-meal__link:focus-visible,
+.add-meal__item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.add-meal__results {
+  min-height: 3rem;
+}
+
+.add-meal__status {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.add-meal__status--error {
+  color: var(--color-danger-text);
+}
+
+.add-meal__link {
+  padding: 0;
+  font: inherit;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.add-meal__list {
+  max-height: 14rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+}
+
+.add-meal__list:empty {
+  display: none;
+}
+
+.add-meal__list li + li {
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.add-meal__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.add-meal__item:hover {
+  background-color: var(--color-bg);
+}
+
+.add-meal__item--selected,
+.add-meal__item--selected:hover {
+  background-color: #ecfdf5;
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.add-meal__item-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.add-meal__item-kcal {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.add-meal__quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-meal__preview {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-primary-hover);
+}

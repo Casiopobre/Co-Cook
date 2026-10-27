@@ -36,12 +36,4 @@ public class GroupController {
     ) {
         return ResponseEntity.ok(groupService.getInviteCode(groupId, user));
     }
-
-    @PostMapping("/join")
-    public ResponseEntity<GroupDTO> join(
-            @Valid @RequestBody JoinGroupRequest request,
-            @AuthenticationPrincipal User user
-    ) {
-        return ResponseEntity.ok(groupService.join(request, user));
-    }
 }

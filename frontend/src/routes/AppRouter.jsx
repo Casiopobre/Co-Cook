@@ -8,6 +8,8 @@ import ProtectedRoute from './ProtectedRoute.jsx'
 import PublicRoute from './PublicRoute.jsx'
 import OAuthCallbackPage from '../features/auth/pages/OAuthCallbackPage.jsx'
 import '../App.css'
+import MyMealsPage from '../features/meals/pages/MyMealsPage.jsx'
+
 
 // El NavBar y los margenes solo aparecen en las pantallas con sesión iniciada
 function AppLayout() {
@@ -33,6 +35,7 @@ function AppRouter() {
             <Route element={<ProtectedRoute />}>
                 <Route element={<AppLayout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/meals" element={<MyMealsPage />} />
                 </Route>
             </Route>
 

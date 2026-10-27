@@ -179,3 +179,30 @@
     flex-direction: column;
   }
 }
+
+.group-members__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.group-members__footer .group-members__join {
+  margin-top: 0;
+}
+
+.group-members__leave {
+  padding: 0;
+  font-size: 0.8125rem;
+  color: var(--color-danger-text);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.group-members__leave:focus-visible {
+  outline: 2px solid var(--color-danger);
+  outline-offset: 2px;
+}

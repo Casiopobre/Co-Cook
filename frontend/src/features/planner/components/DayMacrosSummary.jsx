@@ -14,7 +14,7 @@ export function DayMacrosSummary({ selectedDate, dayPlan }) {
   const totals = sumDayMacros(dayPlan)
   const hasAnyMeal = MEAL_TYPES.some((mealType) => dayPlan?.[mealType])
 
-  const formattedDate = new Date(selectedDate + 'T00:00:00').toLocaleDateString('es-ES', {
+  const formattedDate = new Date(`${selectedDate}T00:00:00`).toLocaleDateString('es-ES', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -36,15 +36,15 @@ export function DayMacrosSummary({ selectedDate, dayPlan }) {
               <span className="day-summary__label">kcal</span>
             </div>
             <div className="day-summary__stat">
-              <span className="day-summary__value">{roundInt(totals.carbs)}g</span>
+              <span className="day-summary__value">{round1(totals.carbs)}g</span>
               <span className="day-summary__label">Carbohidratos</span>
             </div>
             <div className="day-summary__stat">
-              <span className="day-summary__value">{roundInt(totals.proteins)}g</span>
+              <span className="day-summary__value">{round1(totals.proteins)}g</span>
               <span className="day-summary__label">Proteínas</span>
             </div>
             <div className="day-summary__stat">
-              <span className="day-summary__value">{roundInt(totals.fats)}g</span>
+              <span className="day-summary__value">{round1(totals.fats)}g</span>
               <span className="day-summary__label">Grasas</span>
             </div>
           </div>

@@ -7,9 +7,8 @@ export function useUploadAvatar() {
   const { user, token, setSession } = useAuth()
 
   return useMutation({
-    mutationFn: userService.uploadAvatar,
+    mutationFn: (file) => userService.uploadAvatar(user.id, file),
     onSuccess: (updatedUser) => {
-      // Actualiza el usuario del contexto (y localStorage) con la nueva foto
       setSession({ token, user: { ...user, ...updatedUser } })
       queryClient.invalidateQueries({ queryKey: ['groupMembers'] })
     },

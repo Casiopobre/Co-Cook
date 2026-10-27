@@ -45,13 +45,6 @@ public class Group {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Meal> meals = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "group",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
     private List<Stash> stash = new ArrayList<>();
 
     @OneToMany(

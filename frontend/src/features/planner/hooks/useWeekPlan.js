@@ -23,9 +23,7 @@ export function useWeekPlan(referenceDate = new Date()) {
       plan[toISODate(d)] = { BREAKFAST: null, LUNCH: null, SNACK: null, DINNER: null }
     })
     mealPlans.forEach((mp) => {
-      if (plan[mp.date]) {
-        plan[mp.date][mp.mealType] = mp
-      }
+      if (plan[mp.date]) plan[mp.date][mp.mealType] = mp
     })
     return plan
   }, [mealPlans, weekDates])

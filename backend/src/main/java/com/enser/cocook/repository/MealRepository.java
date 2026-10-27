@@ -9,17 +9,18 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MealRepository extends JpaRepository<Meal, Long> {
-    List<Meal> findByGroupId(Long groupId);
 
+    // Las palabras vacías ("") coinciden con todo, así que valen para rellenar hasta tres
     @Query("""
-    SELECT m FROM Meal m
-    WHERE (m.group IS NULL OR m.group.id = :groupId)
-      AND LOWER(m.name) LIKE LOWER(CONCAT('%', :q, '%'))
-    ORDER BY m.name
-    """)
-    List<Meal> search(@Param("groupId") Long groupId,
-                      @Param("q") String q,
-                      Pageable pageable);
-
-    boolean existsByGroupIdAndNameIgnoreCase(Long groupId, String name);
+        SELECT m FROM Meal m
+        WHERE m.fromCatalog = true
+          AND LOWER(m.name) LIKE CONCAT('%', :w1, '%') ESCAPE '!'
+          AND LOWER(m.name) LIKE CONCAT('%', :w2, '%') ESCAPE '!'
+          AND LOWER(m.name) LIKE CONCAT('%', :w3, '%') ESCAPE '!'
+        ORDER BY m.popularity DESC, m.name
+        """)
+    List<Meal> searchCatalog(@Param("w1") String w1,
+                             @Param("w2") String w2,
+                             @Param("w3") String w3,
+                             Pageable pageable);
 }

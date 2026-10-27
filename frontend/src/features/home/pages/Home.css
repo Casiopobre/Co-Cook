@@ -1,0 +1,18 @@
+.home__bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+/* el resumen ya traía su propio margen superior, que aquí sobra */
+.home__bottom .day-summary {
+  margin-top: 0;
+}
+
+@media (max-width: 800px) {
+  .home__bottom {
+    grid-template-columns: 1fr;
+  }
+}

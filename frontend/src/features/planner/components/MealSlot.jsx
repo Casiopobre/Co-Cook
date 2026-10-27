@@ -1,4 +1,5 @@
 import { scaleMacros, roundInt } from '../../../utils/macroCalculator'
+import { SaveMealButton } from './SaveMealButton'
 import './MealSlot.css'
 
 export function MealSlot({ entry, onAdd, onRemove }) {
@@ -25,6 +26,7 @@ export function MealSlot({ entry, onAdd, onRemove }) {
       >
         ×
       </button>
+      <SaveMealButton meal={meal} />
     </div>
   )
 }

@@ -1,0 +1,92 @@
+.my-meals__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.my-meals__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.my-meals__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.my-meals__search {
+  max-width: 24rem;
+  margin-bottom: 1rem;
+}
+
+.my-meals__status {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.my-meals__status--error {
+  color: var(--color-danger-text);
+}
+
+.my-meals__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+}
+
+.my-meals__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+}
+
+.my-meals__item + .my-meals__item {
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.my-meals__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.my-meals__name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.my-meals__macros {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.my-meals__remove {
+  flex-shrink: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.my-meals__remove:hover:not(:disabled) {
+  color: var(--color-danger-text);
+  background-color: var(--color-danger-bg);
+}
+
+.my-meals__remove:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

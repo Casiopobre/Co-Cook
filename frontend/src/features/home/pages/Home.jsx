@@ -1,33 +1,25 @@
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { WeekCalendar } from '../../planner/components/WeekCalendar'
 import { DayMacrosSummary } from '../../planner/components/DayMacrosSummary'
+import { AddMealModal } from '../../planner/components/AddMealModal'
 import { useWeekPlan } from '../../planner/hooks/useWeekPlan'
-import { toISODate } from '../../planner/utils/weekUtils'
 import { plannerService } from '../../planner/services/plannerService'
+import { toISODate } from '../../planner/utils/weekUtils'
 import { useGroupId } from '../../auth/hooks/useGroupId'
-import { useQueryClient } from '@tanstack/react-query'
 import GroupMembers from '../../groups/components/GroupMembers'
-import { MOCK_MEALS } from '../../meals/mocks/mockMeals'
+import './Home.css'
 
-function Home() {
+
+export default function Home() {
   const [selectedDate, setSelectedDate] = useState(() => toISODate(new Date()))
+  const [slotToFill, setSlotToFill] = useState(null) // null | { date, mealType }
 
   const { weekDates, weekPlan, isLoading } = useWeekPlan()
   const groupId = useGroupId()
   const queryClient = useQueryClient()
 
-  const handleAddMeal = async (date, mealType) => {
-    // PROVISIONAL: hasta tener el selector real, pone una comida mock cualquiera
-    const meal = MOCK_MEALS[Math.floor(Math.random() * MOCK_MEALS.length)]
-
-    await plannerService.assign(groupId, {
-      date,
-      mealType,
-      meal,
-      quantityGrams: 100,
-    })
-    queryClient.invalidateQueries({ queryKey: ['mealPlans'] })
-  }
+  const handleAddMeal = (date, mealType) => setSlotToFill({ date, mealType })
 
   const handleRemoveMeal = async (date, mealType) => {
     await plannerService.remove(groupId, date, mealType)
@@ -37,12 +29,7 @@ function Home() {
   if (isLoading) return <p>Cargando planificador...</p>
 
   return (
-    <>
-      <h1 style={{ marginBottom: '1.5rem' }}>Bienvenido a Co-Cook</h1>
-
-      <GroupMembers />
-
-      <h2 style={{ marginTop: '1rem', marginBottom: '1rem' }}>Planificación Semanal</h2>
+    <div>
       <WeekCalendar
         weekDates={weekDates}
         weekPlan={weekPlan}
@@ -52,11 +39,18 @@ function Home() {
         onRemoveMeal={handleRemoveMeal}
       />
 
-      <DayMacrosSummary
-        selectedDate={selectedDate}
-        dayPlan={weekPlan[selectedDate]}
-      />
-    </>
+      <div className="home__bottom">
+        <DayMacrosSummary selectedDate={selectedDate} dayPlan={weekPlan[selectedDate]} />
+        <GroupMembers />
+      </div>
+
+      {slotToFill && (
+        <AddMealModal
+          date={slotToFill.date}
+          mealType={slotToFill.mealType}
+          onClose={() => setSlotToFill(null)}
+        />
+      )}
+    </div>
   )
 }
-export default Home;

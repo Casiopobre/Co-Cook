@@ -1,7 +1,7 @@
 package com.enser.cocook.controller;
 
-import com.enser.cocook.dto.meal.CreateMealRequest;
 import com.enser.cocook.dto.meal.MealDTO;
+import com.enser.cocook.dto.meal.CreateMealRequest;
 import com.enser.cocook.model.User;
 import com.enser.cocook.service.MealService;
 import jakarta.validation.Valid;
@@ -20,18 +20,13 @@ public class MealController {
 
     private final MealService mealService;
 
-    @GetMapping("/search")
-    public ResponseEntity<List<MealDTO>> search(
-            @RequestParam(defaultValue = "") String query,
-            @RequestParam(defaultValue = "20") int limit,
-            @AuthenticationPrincipal User user
-    ) {
-        return ResponseEntity.ok(mealService.search(query, limit, user));
-    }
-
+    // Busca en el catálogo público. Tu colección está en GET /users/{userId}/meals
     @GetMapping
-    public ResponseEntity<List<MealDTO>> mealsByGroup(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(mealService.getMealsByGroup(user));
+    public ResponseEntity<List<MealDTO>> search(
+            @RequestParam String q,
+            @RequestParam(defaultValue = "20") int limit
+    ) {
+        return ResponseEntity.ok(mealService.searchCatalog(q, limit));
     }
 
     @GetMapping("/{id}")

@@ -3,18 +3,21 @@ export const ENDPOINTS = {
     login: '/auth/login',
     register: '/auth/register',
     me: '/auth/me',
-    googleAuthorize: '/oauth2/authorization/google',
   },
-  meals: {
-    search: '/meals/search',
-    byGroup: '/meals',
-    byId: (id) => `/meals/${id}`,
-    create: '/meals',
+  users: {
+    avatar: (userId) => `/users/${userId}/avatar`,
+    group: (userId) => `/users/${userId}/group`,
+    meals: (userId) => `/users/${userId}/meals`,
+    meal: (userId, mealId) => `/users/${userId}/meals/${mealId}`,
   },
   groups: {
     members: (groupId) => `/groups/${groupId}/members`,
     inviteCode: (groupId) => `/groups/${groupId}/invite-code`,
-    join: '/groups/join',
+  },
+  meals: {
+    list: '/meals',
+    byId: (id) => `/meals/${id}`,
+    create: '/meals',
   },
   mealPlans: {
     byGroupAndRange: (groupId, from, to) =>

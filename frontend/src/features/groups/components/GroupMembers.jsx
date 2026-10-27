@@ -7,6 +7,7 @@ import { Modal } from '../../../components/ui/Modal'
 import { JoinGroupForm } from './JoinGroupForm'
 import { InviteCodeDisplay } from './InviteCodeDisplay'
 import { MemberAvatar } from '../../../components/ui/MemberAvatar'
+import { LeaveGroupConfirm } from '../components/LeaveGroupConfirm'
 
 const MAX_STACKED = 4
 
@@ -87,13 +88,16 @@ export default function GroupMembers() {
         </li>
       </ul>
 
-      <button
-        type="button"
-        className="group-members__join"
-        onClick={() => setModalMode('join')}
-      >
-        Unirme a otro grupo
-      </button>
+      <div className="group-members__footer">
+        <button type="button" className="group-members__join" onClick={() => setModalMode('join')}>
+          Unirme a otro grupo
+        </button>
+        {hasCompanions && (
+          <button type="button" className="group-members__leave" onClick={() => setModalMode('leave')}>
+            Salir del grupo
+          </button>
+        )}
+      </div>
 
       <Modal
         isOpen={modalMode === 'invite'}
@@ -109,6 +113,10 @@ export default function GroupMembers() {
         title="Unirte a otro grupo"
       >
         <JoinGroupForm hasCompanions={hasCompanions} onSuccess={closeModal} />
+      </Modal>
+
+      <Modal isOpen={modalMode === 'leave'} onClose={closeModal} title="Salir del grupo">
+        <LeaveGroupConfirm groupName={user?.group?.name} onCancel={closeModal} onSuccess={closeModal} />
       </Modal>
     </section>
   )
